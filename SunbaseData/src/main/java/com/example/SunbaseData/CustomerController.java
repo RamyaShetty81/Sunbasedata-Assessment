@@ -5,6 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.SunbaseData.DTOs.CustomerRequest;
+import com.example.SunbaseData.DTOs.CustomerResponse;
+import com.example.SunbaseData.Exceptions.FirstNameOrLastNameNotFoundException;
+import com.example.SunbaseData.Exceptions.IdNotPresentException;
+import com.example.SunbaseData.Exceptions.NoCustomerException;
+
 import java.util.List;
 
 @RestController("/customer")
@@ -14,7 +20,7 @@ public class CustomerController{
     CustomerService customerService;
 
     @PostMapping("/add")
-    public ResponseEntity addCustomer(@RequestBody CustomerRequest customerRequest)
+    public ResponseEntity addCustomer(@RequestBody CustomerRequest customerRequest) throws Exception
     {
         try {
             String message = customerService.addCustomer(customerRequest);
@@ -25,7 +31,7 @@ public class CustomerController{
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCustomer(@PathVariable Integer id) {
+    public ResponseEntity<String> deleteCustomer(@PathVariable Integer id) throws Exception {
         try {
             String message = customerService.deleteCustomer(id);
             return ResponseEntity.status(HttpStatus.OK).body(message);
@@ -36,9 +42,9 @@ public class CustomerController{
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateCustomerByEmail(@PathVariable Integer id,
-                                                        @RequestBody CustomerRequest customerRequest) {
+                                                        @RequestBody CustomerRequest customerRequest) throws Exception {
         try {
-            String message = customerService.updateCustomer(customerRequest);
+            String message = customerService.updateCustomer(id, customerRequest);
             return ResponseEntity.status(HttpStatus.OK).body(message);
         } catch (IdNotPresentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -46,7 +52,7 @@ public class CustomerController{
     }
 
     @GetMapping
-    public ResponseEntity<List<CustomerResponse>> getAllCustomers() {
+    public ResponseEntity<List<CustomerResponse>> getAllCustomers() throws Exception {
         try {
             List<CustomerResponse> customerResponses = customerService.getCustomerList();
             return ResponseEntity.status(HttpStatus.OK).body(customerResponses);
