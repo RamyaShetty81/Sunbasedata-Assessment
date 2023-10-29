@@ -1,4 +1,4 @@
-package com.example.SunbaseData;
+package com.example.SunbaseData.DTOs;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
