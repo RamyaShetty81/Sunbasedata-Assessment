@@ -1,5 +1,6 @@
 package com.example.SunbaseData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,9 @@ public class CustomerServiceImpl{
         return "Successfully Created";
     }
 
-    public String deleteCustomer(Integer customerId) 
+    public String deleteCustomer(Integer customerId) throws IdNotPresentException 
     {
-        Customer customer = customerRepository.findById(id)
+        Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new IdNotPresentException("Customer not found"));
 
         customerRepository.delete(customer);
@@ -49,7 +50,7 @@ public class CustomerServiceImpl{
         return "Customer updated successfully";
     } 
 
-    public List<CustomerResponse> getCustomerList() 
+    public List<CustomerResponse> getCustomerList() throws NoCustomerException 
     {
         List<Customer> customers = customerRepository.findAll();
         if (customers.isEmpty()) {
