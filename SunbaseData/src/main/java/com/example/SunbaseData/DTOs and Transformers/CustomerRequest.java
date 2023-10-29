@@ -1,4 +1,4 @@
-package com.example.SunbaseData;
+package com.example.SunbaseData.DTOs;
 
 import jakarta.persistence.Column;
 import lombok.*;
