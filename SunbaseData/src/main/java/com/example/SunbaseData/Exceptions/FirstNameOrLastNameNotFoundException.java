@@ -1,4 +1,4 @@
-package com.example.SunbaseData;
+package com.example.SunbaseData.Exceptions;
 
 public class FirstNameOrLastNameNotFoundException extends Exception{
     public FirstNameOrLastNameNotFoundException(String message) {
