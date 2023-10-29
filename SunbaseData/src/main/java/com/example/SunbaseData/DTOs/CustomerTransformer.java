@@ -1,5 +1,8 @@
 package com.example.SunbaseData.DTOs;
 
+
+import com.example.SunbaseData.Customer;
+
 public class CustomerTransformer {
 
     public static Customer customerRequestToCustomer(CustomerRequest customerRequest)
@@ -40,7 +43,7 @@ public class CustomerTransformer {
         customer.setCity(customerRequest.getCity());
         customer.setAddress(customerRequest.getAddress());
         customer .setEmail(customerRequest.getEmail());
-          customer.setPhoneNo(customerRequest.getPhoneNo())
+          customer.setPhoneNo(customerRequest.getPhoneNo());
         return customer;
     }
 }
