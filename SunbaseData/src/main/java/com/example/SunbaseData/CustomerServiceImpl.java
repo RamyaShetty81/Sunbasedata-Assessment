@@ -1,15 +1,22 @@
 package com.example.SunbaseData;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class CustomerServiceImpl implements CustomerService{
+import com.example.SunbaseData.DTOs.CustomerTransformer;
+import com.example.SunbaseData.DTOs.CustomerRequest;
+import com.example.SunbaseData.DTOs.CustomerResponse;
+import com.example.SunbaseData.Exceptions.FirstNameOrLastNameNotFoundException;
+import com.example.SunbaseData.Exceptions.IdNotPresentException;
+import com.example.SunbaseData.Exceptions.NoCustomerException;
+public class CustomerServiceImpl{
 
     @Autowired
     CustomerRepository customerRepository;
 
-    public String addCustomer(CustomerRequest customerRequest) 
+    public String addCustomer(CustomerRequest customerRequest) throws FirstNameOrLastNameNotFoundException 
     {
         if (customerRequest.getFirstName() == null || customerRequest.getLastName() == null) {
            throw new FirstNameOrLastNameNotFoundException("First Name or Last Name is missing");
@@ -29,9 +36,9 @@ public class CustomerServiceImpl implements CustomerService{
         return "Customer deleted successfully";
     }
 
-    public String updateCustomer(Integer id, CustomerRequest customerRequest)
+    public String updateCustomer(Integer id, CustomerRequest customerRequest) throws IdNotPresentException
     {
-        Customer customer = customerRepository.findById(id);
+        Customer customer = customerRepository.findById(id).get();
         if (customer == null) {
             throw new IdNotPresentException("Customer not found");
         }
